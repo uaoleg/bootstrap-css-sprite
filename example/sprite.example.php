@@ -18,16 +18,8 @@ $tagList = $sprite->generate();
 <html>
     <head>
         <title>Bootstrap CSS Sprite Demo Page</title>
+        <link rel="stylesheet" type="text/css" href="css/styles.css" />
         <link rel="stylesheet" type="text/css" href="css/sprite.css" />
-        <style type="text/css">
-            [class^="img-"],
-            [class*=" img-"] {
-                border: 1px solid gray;
-                border-radius: 5px;
-                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-                margin: 5px;
-            }
-        </style>
     </head>
     <body>
         <?php if (count($sprite->getErrors()) > 0): ?>
