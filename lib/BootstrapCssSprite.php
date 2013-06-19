@@ -8,8 +8,8 @@
  * To merges all images from a given directory to one image and
  * to creates CSS file call generate() method.
  *
- * @author Oleg Poludnenko <oleg.poludnenko@dataart.com>
- * @version 0.5
+ * @author Oleg Poludnenko <oleg@poludnenko.info>
+ * @version 0.5.1
  */
 class BootstrapCssSprite
 {
