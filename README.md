@@ -10,11 +10,11 @@ A nice bonus: the image's height and width are set automatically in CSS file.
     <li>Image hover first time without blinking and "jumping".</li>
     <li>No need to define size for each image in HTML templates - library will do it for you in generated CSS file.</li>
     <li>Less HTML code: <code>&lt;i class="img-kitty"&gt;&lt;/i&gt;</code> instead of <pre><code>&lt;img src="&lt;?=$this->theme->baseUrl?&gt;/images/kitty.png" style="width: 64px; height: 64px;" /&gt;</code></pre>
-    It's really save your time!</li>
+    It really saves your time!</li>
 </ul>
 
 ## Usage
-Here is a simplest example how to use the library.
+Here is most simple example how to use the library.
 This code sample takes all images (jpg, jpeg, gif, png) from <i>./images/source/</i> directory.
 Than it merges all these images into one - <b>sprite.png</b> and generates CSS file - <b>sprite.css</b>.
 The CSS file contains classes for all merged files. These classes define source of image and it's size.
