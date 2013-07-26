@@ -33,6 +33,22 @@ The CSS file contains classes for all merged files. These classes define source 
 $sprite->generate();
 </code></pre>
 
+It will look the same way for Yii component. Just copy <b>YiiBootstrapCssSprite.php</b> file to /extensions/ and add this component in /config/main.php
+<pre><code>'components' => array(
+    ...
+    'sprite' => array(
+        'class'         => 'ext.YiiBootstrapCssSprite',
+        'imgSourcePath' => '/path/to/images/source',
+        'imgSourceExt'  => 'jpg,jpeg,gif,png',
+        'imgDestPath'   => '/path/to/images/sprite.png',
+        'cssPath'       => '/path/to/css/sprite.css',
+        'cssNamespace'  => 'img-',
+        'cssImgUrl'     => '/path/to/images/sprite.png',
+    ),
+    ...
+));
+</code></pre>
+
 ## Contributors
 Oleg Poludnenko <oleg@poludnenko.info>
 
