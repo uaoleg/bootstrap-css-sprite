@@ -1,7 +1,7 @@
 <?php
 
 /**
- * CssSprite
+ * BootstrapCssSprite
  *
  * Displays multiple images as a sprite in a Twitter Bootstrap style: <i class="img-kitty"></i>
  *
@@ -9,7 +9,7 @@
  * to creates CSS file call generate() method.
  *
  * @author Oleg Poludnenko <oleg@poludnenko.info>
- * @version 0.5.1
+ * @version 0.5.2
  */
 class BootstrapCssSprite
 {
