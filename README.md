@@ -1,4 +1,4 @@
-![ScreenShot](https://raw.github.com/uaoleg/bootstrap-css-sprite/edit/master/VIEWME.png)
+![ScreenShot](https://raw.github.com/uaoleg/bootstrap-css-sprite/master/VIEWME.png)
 
 ## Introduction
 <b>Bootstrap CSS Sprite</b> is a PHP library, which provides displaying of multiple images as a signle sprite in a Twitter Bootstrap style. 
