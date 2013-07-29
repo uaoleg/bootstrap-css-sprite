@@ -9,7 +9,7 @@
  * to creates CSS file call generate() method.
  *
  * @author Oleg Poludnenko <oleg@poludnenko.info>
- * @version 0.5.2
+ * @version 0.5.3
  */
 class BootstrapCssSprite
 {
@@ -94,7 +94,7 @@ class BootstrapCssSprite
             foreach ($imageList as $imagePath) {
                 $imageSize = @getimagesize($imagePath);
                 if ($imageSize === false) {
-                    $self->addError(CssSprite::ERROR_WRONG_IMAGE_FORMAT, $imagePath);
+                    $self->addError(BootstrapCssSprite::ERROR_WRONG_IMAGE_FORMAT, $imagePath);
                     continue;
                 } else {
                     list($itemWidth, $itemHeight, $itemType) = $imageSize;
