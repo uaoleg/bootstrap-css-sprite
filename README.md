@@ -46,6 +46,9 @@ It will look the same way for Yii component. Just copy <b>YiiBootstrapCssSprite.
     ...
 )
 </code></pre>
+And generate sprite anywhere you want:
+<pre><code>Yii::app()->sprite->generate();
+</code></pre>
 
 ## :hover
 If you want your picture to be changed on mouse hover, you just need to put <b>cat.hover.png</b> image file near <b>cat.png</b>.
