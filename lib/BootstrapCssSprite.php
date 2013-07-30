@@ -9,7 +9,7 @@
  * to creates CSS file call generate() method.
  *
  * @author Oleg Poludnenko <oleg@poludnenko.info>
- * @version 0.5.3
+ * @version 0.6.0
  */
 class BootstrapCssSprite
 {
@@ -20,6 +20,11 @@ class BootstrapCssSprite
     const ERROR_NO_SOURCE_IMAGES    = 'no-source-images';
     const ERROR_WRONG_IMAGE_FORMAT  = 'wrong-image-format';
     const ERROR_UNKNOWN_IMAGE_EXT   = 'unknown-image-ext';
+
+    /**
+     * Hover word (file suffix and CSS prefix)
+     */
+    const HOVER_WORD = 'hover';
 
     /**
      * Path to source images
@@ -49,7 +54,7 @@ class BootstrapCssSprite
      * Namespace (prefix) for CSS classes
      * @var string
      */
-    public $cssNamespace = 'img-';
+    public $cssNamespace = 'img';
 
     /**
      * Result image URL in the CSS file
@@ -89,12 +94,12 @@ class BootstrapCssSprite
         $this->_errors = array();
 
         // Get list of images
-        $fillImgList = function($dir) use(&$self, &$imgList, &$imgWidth, &$imgHeight, &$fillImgList) {
+        $fillImgList = function($dir) use(&$self, &$xOffset, &$imgList, &$imgWidth, &$imgHeight, &$fillImgList) {
             $imageList = glob($dir . DIRECTORY_SEPARATOR . '*.{' . $self->imgSourceExt . '}', GLOB_BRACE);
             foreach ($imageList as $imagePath) {
                 $imageSize = @getimagesize($imagePath);
                 if ($imageSize === false) {
-                    $self->addError(BootstrapCssSprite::ERROR_WRONG_IMAGE_FORMAT, $imagePath);
+                    $self->addError($self::ERROR_WRONG_IMAGE_FORMAT, $imagePath);
                     continue;
                 } else {
                     list($itemWidth, $itemHeight, $itemType) = $imageSize;
@@ -103,17 +108,22 @@ class BootstrapCssSprite
                 if ($itemHeight > $imgHeight) {
                     $imgHeight = $itemHeight;
                 }
+
                 $imgList[$imagePath] = array(
-                    'width'  => $itemWidth,
-                    'height' => $itemHeight,
-                    'ext'    => image_type_to_extension($itemType, false),
+                    'width'     => $itemWidth,
+                    'height'    => $itemHeight,
+                    'x'         => $xOffset,
+                    'ext'       => image_type_to_extension($itemType, false),
                 );
+
+                $xOffset += $itemWidth;
             }
             $subdirList = glob($dir . DIRECTORY_SEPARATOR . '*', GLOB_ONLYDIR);
             foreach ($subdirList as $subdir) {
                 $fillImgList($subdir);
             }
         };
+        $xOffset = 0;
         $imgList = array();
         $imgWidth = $imgHeight = 0;
         $fillImgList($this->imgSourcePath);
@@ -132,8 +142,8 @@ class BootstrapCssSprite
         $cssList = array();
         $cssList[] = array(
             'selectors' => array(
-                '[class^="' . $this->cssNamespace . '"]',
-                '[class*=" ' . $this->cssNamespace . '"]',
+                '[class^="' . $this->cssNamespace . '-"]',
+                '[class*=" ' . $this->cssNamespace . '-"]',
             ),
             'styles' => array(
                 'background-image'      => 'url("' . $this->cssImgUrl . '")',
@@ -148,7 +158,6 @@ class BootstrapCssSprite
 
         // Copy all images, create CSS file and list of tags
         $tagList = array();
-        $destX = 0;
         foreach ($imgList as $imgPath => $imgData) {
 
             // Copy image
@@ -159,28 +168,56 @@ class BootstrapCssSprite
             $src = $imgCreateFunc($imgPath);
             imagealphablending($src, true);
             imagesavealpha($src, true);
-            imagecopy($dest, $src, $destX, 0, 0, 0, $imgData['width'], $imgData['height']);
+            imagecopy($dest, $src, $imgData['x'], 0, 0, 0, $imgData['width'], $imgData['height']);
             imagedestroy($src);
 
-            // Append CSS
+            // Append CSS (if not a hover)
             $sourcePathLeng = mb_strlen($this->imgSourcePath);
-            $class = '.' . $this->cssNamespace . mb_substr($imgPath, $sourcePathLeng + 1);
+            $class = '.' . $this->cssNamespace . '-' . mb_substr($imgPath, $sourcePathLeng + 1);
             $class = mb_substr($class, 0, mb_strlen($class) - mb_strlen($imgData['ext']) - 1);
             $class = str_replace(DIRECTORY_SEPARATOR, '-', $class);
-            $cssList[] = array(
-                'selectors' => array($class),
-                'styles' => array(
-                    'background-position'   => '-' . $destX . 'px 0',
-                    'height'                => $imgData['height'] . 'px',
-                    'width'                 => $imgData['width'] . 'px',
-                ),
-            );
+            $isHover = (mb_substr($class, -mb_strlen('.' . static::HOVER_WORD)) === '.' . static::HOVER_WORD);
+            if (!$isHover) {
+                $cssList[] = array(
+                    'selectors' => array($class),
+                    'styles' => array(
+                        'background-position'   => '-' . $imgData['x'] . 'px 0',
+                        'height'                => $imgData['height'] . 'px',
+                        'width'                 => $imgData['width'] . 'px',
+                    ),
+                );
+            }
+
+            // Check if image has hover
+            if (!$isHover) {
+                $extPos = mb_strrpos($imgPath, $imgData['ext']);
+                if ($extPos !== false) {
+                    $hoverPath = substr_replace($imgPath, static::HOVER_WORD . '.' . $imgData['ext'], $extPos, strlen($imgData['ext']));
+                    $hasHover = isset($imgList[$hoverPath]);
+                } else {
+                    $hasHover = false;
+                }
+                if ($hasHover) {
+                    $hoverData = $imgList[$hoverPath];
+                    $cssList[] = array(
+                        'selectors' => array(
+                            "{$class}:hover",
+                            "{$class}.hover",
+                            ".hover-{$this->cssNamespace}:hover {$class}",
+                        ),
+                        'styles' => array(
+                            'background-position'   => '-' . $hoverData['x'] . 'px 0',
+                            'height'                => $hoverData['height'] . 'px',
+                            'width'                 => $hoverData['width'] . 'px',
+                        ),
+                    );
+                }
+            }
 
             // Append tag
-            $tagList[] = '<i class="' . mb_substr($class, 1) . '"></i>';
-
-            // Next position
-            $destX += $imgData['width'];
+            if (!$isHover) {
+                $tagList[] = '<i class="' . mb_substr($class, 1) . '"></i>';
+            }
         }
 
         // Save image to file

@@ -1,7 +1,7 @@
 ## Introduction
-<b>Bootstrap CSS Sprite</b> is a PHP library, which provides displaying of multiple images as a signle sprite in a Twitter Bootstrap style. 
-E.g. you have a set of images one of which is named <b>kitty.png</b>. 
-To display this image you can just use tag <b>&lt;i&gt;</b> with CSS class <b>img-kitty</b> as Twitter Bootstrap do: <code>&lt;i class="img-kitty"&gt;&lt;/i&gt;</code>.
+<b>Bootstrap CSS Sprite</b> is a PHP library, which provides displaying of multiple images as a signle sprite in a Twitter Bootstrap style.
+E.g. you have a set of images one of which is named <b>cat.png</b>.
+To display this image you can just use tag <b>&lt;i&gt;</b> with CSS class <b>img-cat</b> as Twitter Bootstrap do: <code>&lt;i class="img-cat"&gt;&lt;/i&gt;</code>.
 A nice bonus: the image's height and width are set automatically in CSS file.
 
 <p align="center">
@@ -13,7 +13,7 @@ A nice bonus: the image's height and width are set automatically in CSS file.
     <li>One image file instead one multiple: one request to server and less traffic.</li>
     <li>Image hover first time without blinking and "jumping".</li>
     <li>No need to define size for each image in HTML templates - library will do it for you in generated CSS file.</li>
-    <li>Less HTML code: <code>&lt;i class="img-kitty"&gt;&lt;/i&gt;</code> instead of <pre><code>&lt;img src="&lt;?=$this->theme->baseUrl?&gt;/images/kitty.png" style="width: 64px; height: 64px;" /&gt;</code></pre>
+    <li>Less HTML code: <code>&lt;i class="img-cat"&gt;&lt;/i&gt;</code> instead of <pre><code>&lt;img src="&lt;?=$this->theme->baseUrl?&gt;/images/cat.png" style="width: 64px; height: 64px;" /&gt;</code></pre>
     It really saves your time!</li>
 </ul>
 
@@ -27,7 +27,6 @@ The CSS file contains classes for all merged files. These classes define source 
     'imgSourceExt'  => 'jpg,jpeg,gif,png',
     'imgDestPath'   => './images/sprite.png',
     'cssPath'       => './css/sprite.css',
-    'cssNamespace'  => 'img-',
     'cssImgUrl'     => '../images/sprite.png',
 ));
 $sprite->generate();
@@ -42,12 +41,16 @@ It will look the same way for Yii component. Just copy <b>YiiBootstrapCssSprite.
         'imgSourceExt'  => 'jpg,jpeg,gif,png',
         'imgDestPath'   => '/path/to/images/sprite.png',
         'cssPath'       => '/path/to/css/sprite.css',
-        'cssNamespace'  => 'img-',
         'cssImgUrl'     => '/path/to/images/sprite.png',
     ),
     ...
 ));
 </code></pre>
+
+## :hover
+If you want your cat picture to be changed on mouse hover, you just need to put <b>cat.hover.png</b> image file near <b>cat.png</b>.
+In case when you need to change picture on mouse hover over parent element (not picture itself), you should add <b>hover-img</b> CSS-class to the element: <code>&lt;button class="btn hover-img"&gt;&lt;i class="img-cat"&gt;&lt;/i&gt; My Cat&lt;/button&gt;</code>.
+Also you can trigger hover event manually by adding <b>hover</b> CSS-class to your picture: <code>$('.img-cat').addClass('hover')</code>.
 
 ## Contributors
 Oleg Poludnenko <oleg@poludnenko.info>
