@@ -44,7 +44,7 @@ It will look the same way for Yii component. Just copy <b>YiiBootstrapCssSprite.
         'cssImgUrl'     => '/path/to/images/sprite.png',
     ),
     ...
-));
+)
 </code></pre>
 
 ## :hover
