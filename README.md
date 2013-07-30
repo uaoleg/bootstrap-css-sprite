@@ -21,7 +21,7 @@ A nice bonus: the image's height and width are set automatically in CSS file.
 Here is most simple example how to use the library.
 This code sample takes all images (jpg, jpeg, gif, png) from <i>./images/source/</i> directory.
 Than it merges all these images into one - <b>sprite.png</b> and generates CSS file - <b>sprite.css</b>.
-The CSS file contains classes for all merged files. These classes define source of image and it's size.
+The CSS file contains classes for all merged files. These classes define source of image, it's size and hover behavior.
 <pre><code>$sprite = new BootstrapCssSprite(array(
     'imgSourcePath' => './images/source',
     'imgSourceExt'  => 'jpg,jpeg,gif,png',
