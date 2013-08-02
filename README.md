@@ -21,7 +21,7 @@ A nice bonus: the image's height and width are set automatically in CSS file.
 Here is most simple example how to use the library.
 This code sample takes all images (jpg, jpeg, gif, png) from <i>./images/source/</i> directory.
 Than it merges all these images into one - <b>sprite.png</b> and generates CSS file - <b>sprite.css</b>.
-The CSS file contains classes for all merged files. These classes define source of image and it's size.
+The CSS file contains classes for all merged files. These classes define source of image, it's size and hover behavior.
 <pre><code>$sprite = new BootstrapCssSprite(array(
     'imgSourcePath' => './images/source',
     'imgSourceExt'  => 'jpg,jpeg,gif,png',
@@ -46,11 +46,17 @@ It will look the same way for Yii component. Just copy <b>YiiBootstrapCssSprite.
     ...
 )
 </code></pre>
+And generate sprite anywhere you want:
+<pre><code>Yii::app()->sprite->generate();
+</code></pre>
 
 ## :hover
-If you want your cat picture to be changed on mouse hover, you just need to put <b>cat.hover.png</b> image file near <b>cat.png</b>.
-In case when you need to change picture on mouse hover over parent element (not picture itself), you should add <b>hover-img</b> CSS-class to the element: <code>&lt;button class="btn hover-img"&gt;&lt;i class="img-cat"&gt;&lt;/i&gt; My Cat&lt;/button&gt;</code>.
-Also you can trigger hover event manually by adding <b>hover</b> CSS-class to your picture: <code>$('.img-cat').addClass('hover')</code>.
+If you want your picture to be changed on mouse hover, you just need to put <b>cat.hover.png</b> image file near <b>cat.png</b>.
+And that's all!
+In case when you need to change picture when it's parent element mouseovered (not picture itself), you should add <b>hover-img</b> CSS-class to the element:
+<pre><code>&lt;button class="btn hover-img"&gt;&lt;i class="img-cat"&gt;&lt;/i&gt; My Cat&lt;/button&gt;</code></pre>
+Also you can trigger hover event manually by adding <b>hover</b> CSS-class to your picture: 
+<pre><code>$('.img-cat').addClass('hover')</code></pre>
 
 ## Contributors
 Oleg Poludnenko <oleg@poludnenko.info>
