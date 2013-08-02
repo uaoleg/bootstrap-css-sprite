@@ -17,9 +17,10 @@ class YiiBootstrapCssSprite extends CApplicationComponent
     /**
      * List of errors
      */
-    const ERROR_NO_SOURCE_IMAGES    = 'no-source-images';
-    const ERROR_WRONG_IMAGE_FORMAT  = 'wrong-image-format';
-    const ERROR_UNKNOWN_IMAGE_EXT   = 'unknown-image-ext';
+    const ERROR_NO_SOURCE_IMAGES        = 'no-source-images';
+    const ERROR_SPRITE_EQUALS_TO_SOURCE = 'sprite-equals-to-source';
+    const ERROR_WRONG_IMAGE_FORMAT      = 'wrong-image-format';
+    const ERROR_UNKNOWN_IMAGE_EXT       = 'unknown-image-ext';
 
     /**
      * Hover word (file suffix and CSS prefix)
@@ -69,6 +70,21 @@ class YiiBootstrapCssSprite extends CApplicationComponent
     protected $_errors = array();
 
     /**
+     * Constructor
+     *
+     * @param array $config
+     */
+    public function __construct(array $config = array())
+    {
+        // Initial configuration
+        foreach ($config as $key => $value) {
+            if (property_exists($this, $key)) {
+                $this->$key = $value;
+            }
+        }
+    }
+
+    /**
      * Merges images and generates CSS file
      */
     public function generate()
@@ -77,6 +93,16 @@ class YiiBootstrapCssSprite extends CApplicationComponent
 
         // Clear errors
         $this->_errors = array();
+
+        // Check modification time
+        if ((is_dir($this->imgSourcePath)) && (is_file($this->imgDestPath))) {
+            $imgSourceStat = stat($this->imgSourcePath);
+            $imgDestStat = stat($this->imgDestPath);
+            if ($imgSourceStat['mtime'] <= $imgDestStat['mtime']) {
+                $this->addError(static::ERROR_SPRITE_EQUALS_TO_SOURCE);
+                return;
+            }
+        }
 
         // Get list of images
         $fillImgList = function($dir) use(&$self, &$xOffset, &$imgList, &$imgWidth, &$imgHeight, &$fillImgList) {
