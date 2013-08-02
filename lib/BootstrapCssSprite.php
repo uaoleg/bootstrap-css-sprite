@@ -64,6 +64,12 @@ class BootstrapCssSprite
     public $cssImgUrl;
 
     /**
+     * List of generated tag (can be used for example)
+     * @var array
+     */
+    protected $_tagList = array();
+
+    /**
      * List of errors
      * @var array
      */
@@ -168,7 +174,7 @@ class BootstrapCssSprite
         );
 
         // Copy all images, create CSS file and list of tags
-        $tagList = array();
+        $this->_tagList = array();
         foreach ($imgList as $imgPath => $imgData) {
 
             // Copy image
@@ -227,7 +233,7 @@ class BootstrapCssSprite
 
             // Append tag
             if (!$isHover) {
-                $tagList[] = '<i class="' . mb_substr($class, 1) . '"></i>';
+                $this->_tagList[] = '<i class="' . mb_substr($class, 1) . '"></i>';
             }
         }
 
@@ -261,9 +267,16 @@ class BootstrapCssSprite
             $cssString .= '}';
         }
         file_put_contents($this->cssPath, $cssString);
+    }
 
-        // Return list of tags
-        return $tagList;
+    /**
+     * Returns tags
+     *
+     * @return array
+     */
+    public function getTagList()
+    {
+        return $this->_tagList;
     }
 
     /**

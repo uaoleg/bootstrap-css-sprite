@@ -10,7 +10,7 @@ $sprite = new BootstrapCssSprite(array(
     'cssNamespace'  => 'img',
     'cssImgUrl'     => '../images/sprite.png',
 ));
-$tagList = $sprite->generate();
+$sprite->generate();
 
 ?>
 
@@ -27,7 +27,7 @@ $tagList = $sprite->generate();
             <pre><?php print_r($sprite->getErrors()); ?></pre>
         <?php else: ?>
             <h2>Success!</h2>
-            <?php foreach ($tagList as $tag): ?>
+            <?php foreach ($sprite->getTagList() as $tag): ?>
                 <div class="hover-img">
                     <?php echo $tag; ?>
                     <?php echo htmlentities($tag); ?>
