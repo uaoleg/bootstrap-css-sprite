@@ -47,7 +47,17 @@ It will look the same way for Yii component. Just copy <b>YiiBootstrapCssSprite.
 )
 </code></pre>
 And generate sprite anywhere you want:
-<pre><code>Yii::app()->sprite->generate();
+<pre><code>abstract class BaseController
+{
+    public function init()
+    {
+        ...
+        if (APP_ENV === APP_ENV_DEV) {
+            Yii::app()->sprite->generate(); // Regenerates sprite only if source dir was changed
+        }
+        ...
+    }
+}
 </code></pre>
 
 ## :hover
