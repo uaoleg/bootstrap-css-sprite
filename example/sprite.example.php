@@ -24,7 +24,17 @@ $sprite->generate();
     <body>
         <?php if (count($sprite->getErrors()) > 0): ?>
             <h2>Errors occured:</h2>
-            <pre><?php print_r($sprite->getErrors()); ?></pre>
+            <ul>
+                <?php foreach ($sprite->getErrors() as $error): ?>
+                <li>
+                    <?=$error['type']?>
+                    <?php if (!empty($error['message'])): ?>
+                        <br />
+                        <i><?=$error['message']?></i>
+                    <?php endif; ?>
+                </li>
+                <?php endforeach; ?>
+            </ul>
         <?php else: ?>
             <h2>Success!</h2>
             <?php foreach ($sprite->getTagList() as $tag): ?>

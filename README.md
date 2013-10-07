@@ -1,7 +1,7 @@
 ## Introduction
-<b>Bootstrap CSS Sprite</b> is a PHP library, which provides displaying of multiple images as a signle sprite in a Twitter Bootstrap style.
+<b>Bootstrap CSS Sprite</b> is a PHP library, which provides displaying of multiple images as a signle sprite in a Bootstrap 3 style.
 E.g. you have a set of images one of which is named <b>cat.png</b>.
-To display this image you can just use tag <b>&lt;i&gt;</b> with CSS class <b>img-cat</b> as Twitter Bootstrap do: <code>&lt;i class="img-cat"&gt;&lt;/i&gt;</code>.
+To display this image you can just use tag <b>&lt;span&gt;</b> with CSS class <b>img-cat</b> as Bootstrap 3 does: <code>&lt;span class="img-cat"&gt;&lt;/span&gt;</code>.
 A nice bonus: the image's height and width are set automatically in CSS file.
 
 <p align="center">
@@ -13,7 +13,7 @@ A nice bonus: the image's height and width are set automatically in CSS file.
     <li>One image file instead one multiple: one request to server and less traffic.</li>
     <li>Image hover first time without blinking and "jumping".</li>
     <li>No need to define size for each image in HTML templates - library will do it for you in generated CSS file.</li>
-    <li>Less HTML code: <code>&lt;i class="img-cat"&gt;&lt;/i&gt;</code> instead of <pre><code>&lt;img src="&lt;?=$this->theme->baseUrl?&gt;/images/cat.png" style="width: 64px; height: 64px;" /&gt;</code></pre>
+    <li>Less HTML code: <code>&lt;span class="img-cat"&gt;&lt;/span&gt;</code> instead of <pre><code>&lt;img src="&lt;?=$this->theme->baseUrl?&gt;/images/cat.png" style="width: 64px; height: 64px;" /&gt;</code></pre>
     It really saves your time!</li>
 </ul>
 
@@ -64,8 +64,8 @@ And generate sprite anywhere you want:
 If you want your picture to be changed on mouse hover, you just need to put <b>cat.hover.png</b> image file near <b>cat.png</b>.
 And that's all!
 In case when you need to change picture when it's parent element mouseovered (not picture itself), you should add <b>hover-img</b> CSS-class to the element:
-<pre><code>&lt;button class="btn hover-img"&gt;&lt;i class="img-cat"&gt;&lt;/i&gt; My Cat&lt;/button&gt;</code></pre>
-Also you can trigger hover event manually by adding <b>hover</b> CSS-class to your picture: 
+<pre><code>&lt;button class="btn hover-img"&gt;&lt;span class="img-cat"&gt;&lt;/span&gt; My Cat&lt;/button&gt;</code></pre>
+Also you can trigger hover event manually by adding <b>hover</b> CSS-class to your picture:
 <pre><code>$('.img-cat').addClass('hover')</code></pre>
 
 ## Contributors

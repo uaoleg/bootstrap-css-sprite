@@ -3,13 +3,13 @@
 /**
  * BootstrapCssSprite
  *
- * Displays multiple images as a sprite in a Twitter Bootstrap style: <i class="img-kitty"></i>
+ * Displays multiple images as a sprite in a Bootstrap 3 style: <span class="img-kitty"></span>
  *
  * To merges all images from a given directory to one image and
  * to creates CSS file call generate() method.
  *
  * @author Oleg Poludnenko <oleg@poludnenko.info>
- * @version 0.6.0
+ * @version 0.6.1
  */
 class BootstrapCssSprite
 {
@@ -233,7 +233,7 @@ class BootstrapCssSprite
 
             // Append tag
             if (!$isHover) {
-                $this->_tagList[] = '<i class="' . mb_substr($class, 1) . '"></i>';
+                $this->_tagList[] = '<span class="' . mb_substr($class, 1) . '"></span>';
             }
         }
 
