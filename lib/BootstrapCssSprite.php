@@ -102,7 +102,7 @@ class BootstrapCssSprite
         $this->_errors = array();
 
         // Normalize destination image path
-        $this->imgDestPath = realpath($this->imgDestPath);
+        $this->imgDestPath = str_replace(array('\\', '/'), DIRECTORY_SEPARATOR, $this->imgDestPath);
 
         // Check modification time
         if ((is_dir($this->imgSourcePath)) && (is_file($this->imgDestPath))) {
@@ -243,6 +243,7 @@ class BootstrapCssSprite
                             ),
                             'styles' => array(
                                 'background-position'   => '-' . $magicActionData['x'] . 'px 0',
+                                'background-position-x' => '-' . $magicActionData['x'] . 'px',
                                 'height'                => $magicActionData['height'] . 'px',
                                 'width'                 => $magicActionData['width'] . 'px',
                             ),
