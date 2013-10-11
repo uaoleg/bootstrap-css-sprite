@@ -9,7 +9,7 @@
  * to creates CSS file call generate() method.
  *
  * @author Oleg Poludnenko <oleg@poludnenko.info>
- * @version 0.6.1
+ * @version 0.6.2
  */
 class BootstrapCssSprite
 {
@@ -23,9 +23,10 @@ class BootstrapCssSprite
     const ERROR_UNKNOWN_IMAGE_EXT       = 'unknown-image-ext';
 
     /**
-     * Hover word (file suffix and CSS prefix)
+     * List of magic actions (file suffix and CSS prefix)
+     * @var array
      */
-    const HOVER_WORD = 'hover';
+    public static $magicActions = array('hover', 'active', 'target');
 
     /**
      * Path to source images
@@ -188,13 +189,19 @@ class BootstrapCssSprite
             imagecopy($dest, $src, $imgData['x'], 0, 0, 0, $imgData['width'], $imgData['height']);
             imagedestroy($src);
 
-            // Append CSS (if not a hover)
+            // Append CSS (if not a magic action)
             $sourcePathLeng = mb_strlen($this->imgSourcePath);
             $class = '.' . $this->cssNamespace . '-' . mb_substr($imgPath, $sourcePathLeng + 1);
             $class = mb_substr($class, 0, mb_strlen($class) - mb_strlen($imgData['ext']) - 1);
             $class = str_replace(DIRECTORY_SEPARATOR, '-', $class);
-            $isHover = (mb_substr($class, -mb_strlen('.' . static::HOVER_WORD)) === '.' . static::HOVER_WORD);
-            if (!$isHover) {
+            $isMagicAction = false;
+            foreach (static::$magicActions as $magicAction) {
+                $isMagicAction = (mb_substr($class, -mb_strlen('.' . $magicAction)) === '.' . $magicAction);
+                if ($isMagicAction) {
+                    break;
+                }
+            }
+            if (!$isMagicAction) {
                 $cssList[] = array(
                     'selectors' => array($class),
                     'styles' => array(
@@ -205,34 +212,37 @@ class BootstrapCssSprite
                 );
             }
 
-            // Check if image has hover
-            if (!$isHover) {
+            // Check if image has magic action (active, hover, target)
+            if (!$isMagicAction) {
                 $extPos = mb_strrpos($imgPath, $imgData['ext']);
-                if ($extPos !== false) {
-                    $hoverPath = substr_replace($imgPath, static::HOVER_WORD . '.' . $imgData['ext'], $extPos, strlen($imgData['ext']));
-                    $hasHover = isset($imgList[$hoverPath]);
-                } else {
-                    $hasHover = false;
-                }
-                if ($hasHover) {
-                    $hoverData = $imgList[$hoverPath];
-                    $cssList[] = array(
-                        'selectors' => array(
-                            "{$class}:hover",
-                            "{$class}.hover",
-                            ".hover-{$this->cssNamespace}:hover {$class}",
-                        ),
-                        'styles' => array(
-                            'background-position'   => '-' . $hoverData['x'] . 'px 0',
-                            'height'                => $hoverData['height'] . 'px',
-                            'width'                 => $hoverData['width'] . 'px',
-                        ),
-                    );
+                foreach (static::$magicActions as $magicAction) {
+                    if ($extPos !== false) {
+                        $magicActionPath = substr_replace($imgPath, $magicAction . '.' . $imgData['ext'], $extPos, strlen($imgData['ext']));
+                        $hasMagicAction = isset($imgList[$magicActionPath]);
+                    } else {
+                        $hasMagicAction = false;
+                    }
+                    if ($hasMagicAction) {
+                        $magicActionData = $imgList[$magicActionPath];
+                        $cssList[] = array(
+                            'selectors' => array(
+                                "{$class}:{$magicAction}",
+                                "{$class}.{$magicAction}",
+                                ".wrap-{$this->cssNamespace}:{$magicAction} {$class}",
+                                ".wrap-{$this->cssNamespace}.{$magicAction} {$class}",
+                            ),
+                            'styles' => array(
+                                'background-position'   => '-' . $magicActionData['x'] . 'px 0',
+                                'height'                => $magicActionData['height'] . 'px',
+                                'width'                 => $magicActionData['width'] . 'px',
+                            ),
+                        );
+                    }
                 }
             }
 
             // Append tag
-            if (!$isHover) {
+            if (!$isMagicAction) {
                 $this->_tagList[] = '<span class="' . mb_substr($class, 1) . '"></span>';
             }
         }
