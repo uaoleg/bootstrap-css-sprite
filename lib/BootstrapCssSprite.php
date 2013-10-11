@@ -9,7 +9,7 @@
  * to creates CSS file call generate() method.
  *
  * @author Oleg Poludnenko <oleg@poludnenko.info>
- * @version 0.6.2
+ * @version 0.6.3
  */
 class BootstrapCssSprite
 {
@@ -101,6 +101,9 @@ class BootstrapCssSprite
         // Clear errors
         $this->_errors = array();
 
+        // Normalize destination image path
+        $this->imgDestPath = realpath($this->imgDestPath);
+
         // Check modification time
         if ((is_dir($this->imgSourcePath)) && (is_file($this->imgDestPath))) {
             $imgSourceStat = stat($this->imgSourcePath);
@@ -115,6 +118,13 @@ class BootstrapCssSprite
         $fillImgList = function($dir) use(&$self, &$xOffset, &$imgList, &$imgWidth, &$imgHeight, &$fillImgList) {
             $imageList = glob($dir . DIRECTORY_SEPARATOR . '*.{' . $self->imgSourceExt . '}', GLOB_BRACE);
             foreach ($imageList as $imagePath) {
+
+                // Skip previously generated sprite
+                if ($imagePath === $self->imgDestPath) {
+                    continue;
+                }
+
+                // Get image sizes
                 $imageSize = @getimagesize($imagePath);
                 if ($imageSize === false) {
                     $self->addError($self::ERROR_WRONG_IMAGE_FORMAT, $imagePath);
