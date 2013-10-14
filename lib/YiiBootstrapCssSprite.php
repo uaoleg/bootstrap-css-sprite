@@ -9,7 +9,7 @@
  * to creates CSS file call generate() method.
  *
  * @author Oleg Poludnenko <oleg@poludnenko.info>
- * @version 0.6.3
+ * @version 0.6.4
  */
 class YiiBootstrapCssSprite extends CApplicationComponent
 {
@@ -39,6 +39,12 @@ class YiiBootstrapCssSprite extends CApplicationComponent
      * @var string
      */
     public $imgSourceExt = 'jpg,jpeg,gif,png';
+
+    /**
+     * Image size (width or height) wich is greater, will be skipped
+     * @var int
+     */
+    public $imgSourceSkipSize;
 
     /**
      * Path to result image
@@ -132,11 +138,21 @@ class YiiBootstrapCssSprite extends CApplicationComponent
                 } else {
                     list($itemWidth, $itemHeight, $itemType) = $imageSize;
                 }
+
+                // Check size
+                if ($self->imgSourceSkipSize) {
+                    if (($itemWidth > $self->imgSourceSkipSize) || ($itemHeight > $self->imgSourceSkipSize)) {
+                        continue;
+                    }
+                }
+
+                // Inc sprite size
                 $imgWidth += $itemWidth;
                 if ($itemHeight > $imgHeight) {
                     $imgHeight = $itemHeight;
                 }
 
+                // Push image to the list
                 $imgList[$imagePath] = array(
                     'width'     => $itemWidth,
                     'height'    => $itemHeight,
