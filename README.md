@@ -10,7 +10,7 @@ A nice bonus: the image's height and width are set automatically in CSS file.
 
 ## Benefits
 <ul>
-    <li>One image file instead of multiple: one request to server and less traffic.</li>
+    <li>One image file instead of multiple: one request to server &ndash; less traffic and time.</li>
     <li>Image hover first time without blinking and "jumping".</li>
     <li>No need to define size for each image in HTML templates - library will do it for you in generated CSS file.</li>
     <li>Less HTML code: <code>&lt;span class="img-cat"&gt;&lt;/span&gt;</code> instead of <pre><code>&lt;img src="&lt;?=$this->theme->baseUrl?&gt;/images/cat.png" style="width: 64px; height: 64px;" /&gt;</code></pre>
