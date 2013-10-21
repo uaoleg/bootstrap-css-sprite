@@ -78,7 +78,7 @@ Here's how you HTML will look:
     &lt;span class="img-checkbox"&gt;&lt;/span&gt;
 &lt;/label&gt;
 </code></pre>
-Also you need a little extra CSS to hide native checkbox control:
+Also you have to write a little extra CSS to hide native checkbox control:
 <pre><code>label.checkbox-custom &gt; input {
     display: none;
 }
