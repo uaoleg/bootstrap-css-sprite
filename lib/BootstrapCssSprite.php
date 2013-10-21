@@ -9,7 +9,7 @@
  * to creates CSS file call generate() method.
  *
  * @author Oleg Poludnenko <oleg@poludnenko.info>
- * @version 0.6.4
+ * @version 0.6.5
  */
 class BootstrapCssSprite
 {
@@ -24,9 +24,10 @@ class BootstrapCssSprite
 
     /**
      * List of magic actions (file suffix and CSS prefix)
+     * @link http://webdesign.tutsplus.com/tutorials/htmlcss-tutorials/quick-tip-easy-css3-checkboxes-and-radio-buttons/ Example of :checked usage
      * @var array
      */
-    public static $magicActions = array('hover', 'active', 'target');
+    public static $magicActions = array('hover', 'active', 'target', 'checked');
 
     /**
      * Path to source images
@@ -250,20 +251,26 @@ class BootstrapCssSprite
                     }
                     if ($hasMagicAction) {
                         $magicActionData = $imgList[$magicActionPath];
-                        $cssList[] = array(
-                            'selectors' => array(
+                        $css = array();
+                        if ($magicAction === 'checked') {
+                            $css['selectors'] = array(
+                                "input:checked + {$class}",
+                            );
+                        } else {
+                            $css['selectors'] = array(
                                 "{$class}:{$magicAction}",
                                 "{$class}.{$magicAction}",
                                 ".wrap-{$this->cssNamespace}:{$magicAction} {$class}",
                                 ".wrap-{$this->cssNamespace}.{$magicAction} {$class}",
-                            ),
-                            'styles' => array(
-                                'background-position'   => '-' . $magicActionData['x'] . 'px 0',
-                                'background-position-x' => '-' . $magicActionData['x'] . 'px',
-                                'height'                => $magicActionData['height'] . 'px',
-                                'width'                 => $magicActionData['width'] . 'px',
-                            ),
+                            );
+                        }
+                        $css['styles'] = array(
+                            'background-position'   => '-' . $magicActionData['x'] . 'px 0',
+                            'background-position-x' => '-' . $magicActionData['x'] . 'px',
+                            'height'                => $magicActionData['height'] . 'px',
+                            'width'                 => $magicActionData['width'] . 'px',
                         );
+                        $cssList[] = $css;
                     }
                 }
             }
