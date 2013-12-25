@@ -69,9 +69,9 @@ Also you can trigger hover event manually by adding <b>hover</b> CSS-class to yo
 <pre><code>$('.img-cat').addClass('hover')</code></pre>
 The same is for <b>:active</b> and <b>:target</b> pseudo-classes.
 
-## :checked &ndash; Custom Checkboxes
-If you want to implement some custom checkbox than <b>:checked</b> pseudo-class will be useful for you. 
-Again you will need two files: <b>checkbox.png</b> and <b>checkbox.checked.png</b>.
+## :checked :disabled &ndash; Custom Checkboxes
+If you want to implement some custom checkbox than <b>:checked</b> and  <b>:disabled</b> pseudo-classes will be useful for you. 
+Again, you will need source file <b>checkbox.png</b> and one file for each pseudo-class: <b>checkbox.checked.png</b> and <b>checkbox.disabled.png</b>.
 Here's how you HTML will look:
 <pre><code>&lt;label class="checkbox-custom"&gt;
     &lt;input type="checkbox" /&gt;
