@@ -60,13 +60,29 @@ And generate sprite anywhere you want:
 }
 </code></pre>
 
-## :hover
+## :hover :active :target
 If you want your picture to be changed on mouse hover, you just need to put <b>cat.hover.png</b> image file near <b>cat.png</b>.
 And that's all!
 In case when you need to change picture when it's parent element mouseovered (not picture itself), you should add <b>hover-img</b> CSS-class to the element:
 <pre><code>&lt;button class="btn hover-img"&gt;&lt;span class="img-cat"&gt;&lt;/span&gt; My Cat&lt;/button&gt;</code></pre>
 Also you can trigger hover event manually by adding <b>hover</b> CSS-class to your picture:
 <pre><code>$('.img-cat').addClass('hover')</code></pre>
+The same is for <b>:active</b> and <b>:target</b> pseudo-classes.
+
+## :checked &ndash; Custom Checkboxes
+If you want to implement some custom checkbox than <b>:checked</b> pseudo-class will be useful for you. 
+Again you will need two files: <b>checkbox.png</b> and <b>checkbox.checked.png</b>.
+Here's how you HTML will look:
+<pre><code>&lt;label class="checkbox-custom"&gt;
+    &lt;input type="checkbox" /&gt;
+    &lt;span class="img-checkbox"&gt;&lt;/span&gt;
+&lt;/label&gt;
+</code></pre>
+Also you have to write a little extra CSS to hide native checkbox control:
+<pre><code>label.checkbox-custom &gt; input {
+    display: none;
+}
+</code></pre>
 
 ## Contributors
 Oleg Poludnenko <oleg@poludnenko.info>
