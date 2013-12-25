@@ -9,7 +9,7 @@
  * to creates CSS file call generate() method.
  *
  * @author Oleg Poludnenko <oleg@poludnenko.info>
- * @version 0.6.5
+ * @version 0.6.6
  */
 class BootstrapCssSprite
 {
@@ -27,7 +27,7 @@ class BootstrapCssSprite
      * @link http://webdesign.tutsplus.com/tutorials/htmlcss-tutorials/quick-tip-easy-css3-checkboxes-and-radio-buttons/ Example of :checked usage
      * @var array
      */
-    public static $magicActions = array('hover', 'active', 'target', 'checked');
+    public static $magicActions = array('hover', 'active', 'target', 'checked', 'disabled');
 
     /**
      * Path to source images
@@ -252,9 +252,9 @@ class BootstrapCssSprite
                     if ($hasMagicAction) {
                         $magicActionData = $imgList[$magicActionPath];
                         $css = array();
-                        if ($magicAction === 'checked') {
+                        if (in_array($magicAction, array('checked', 'disabled'))) {
                             $css['selectors'] = array(
-                                "input:checked + {$class}",
+                                "input:{$magicAction} + {$class}",
                             );
                         } else {
                             $css['selectors'] = array(
