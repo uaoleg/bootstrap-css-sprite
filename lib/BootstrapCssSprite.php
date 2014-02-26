@@ -9,7 +9,7 @@
  * to creates CSS file call generate() method.
  *
  * @author Oleg Poludnenko <oleg@poludnenko.info>
- * @version 0.6.6
+ * @version 0.6.7
  */
 class BootstrapCssSprite
 {
@@ -255,6 +255,7 @@ class BootstrapCssSprite
                         if (in_array($magicAction, array('checked', 'disabled'))) {
                             $css['selectors'] = array(
                                 "input:{$magicAction} + {$class}",
+                                "{$class}.{$magicAction}",
                             );
                         } else {
                             $css['selectors'] = array(
