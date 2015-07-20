@@ -205,6 +205,8 @@ class BootstrapCssSprite
         $this->_tagList = array();
         foreach ($imgList as $imgPath => $imgData) {
 
+            $imgExt = mb_strtolower(mb_substr($imgPath, mb_strrpos($imgPath, '.') + 1));
+
             // Copy image
             $imgCreateFunc = 'imagecreatefrom' . $imgData['ext'];
             if (!function_exists($imgCreateFunc)) {
@@ -219,7 +221,7 @@ class BootstrapCssSprite
             // Append CSS (if not a magic action)
             $sourcePathLeng = mb_strlen($this->imgSourcePath);
             $class = '.' . $this->cssNamespace . '-' . mb_substr($imgPath, $sourcePathLeng + 1);
-            $class = mb_substr($class, 0, mb_strlen($class) - mb_strlen($imgData['ext']) - 1);
+            $class = mb_substr($class, 0, mb_strlen($class) - mb_strlen($imgExt) - 1);
             $class = str_replace(DIRECTORY_SEPARATOR, '-', $class);
             $isMagicAction = false;
             foreach (static::$magicActions as $magicAction) {
