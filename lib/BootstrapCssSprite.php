@@ -104,6 +104,8 @@ class BootstrapCssSprite
     public function generate()
     {
         $self = $this;
+        $firstImgWidth = 0;
+        $firstImgHeight = 0;
 
         // Clear errors
         $this->_errors = array();
@@ -122,7 +124,7 @@ class BootstrapCssSprite
         }
 
         // Get list of images
-        $fillImgList = function($dir) use(&$self, &$xOffset, &$imgList, &$imgWidth, &$imgHeight, &$fillImgList) {
+        $fillImgList = function($dir) use(&$self, &$xOffset, &$imgList, &$imgWidth, &$imgHeight, &$fillImgList, &$firstImgWidth, &$firstImgHeight) {
             $imageList = glob($dir . DIRECTORY_SEPARATOR . '*.{' . $self->imgSourceExt . '}', GLOB_BRACE);
             foreach ($imageList as $imagePath) {
 
@@ -160,6 +162,10 @@ class BootstrapCssSprite
                     'x'         => $xOffset,
                     'ext'       => image_type_to_extension($itemType, false),
                 );
+                if (!$firstImgWidth && !$firstImgHeight) {
+                    $firstImgWidth  = $itemWidth;
+                    $firstImgHeight = $itemHeight;
+                }
 
                 $xOffset += $itemWidth;
             }
@@ -195,9 +201,9 @@ class BootstrapCssSprite
                 'background-position'   => '0 0',
                 'background-repeat'     => 'no-repeat',
                 'display'               => 'inline-block',
-                'height'                => '64px',
+                'height'                => "{$firstImgHeight}px",
                 'vertical-align'        => 'middle',
-                'width'                 => '64px',
+                'width'                 => "{$firstImgWidth}px",
             ),
         );
 
