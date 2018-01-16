@@ -1,3 +1,8 @@
+## UPD Today you can simply use HTTP/2
+No more need to think of work arounds. Simply turn on HTTP/2 for your web server
+* Nginx https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-with-http-2-support-on-ubuntu-16-04
+* Apache https://httpd.apache.org/docs/2.4/howto/http2.html
+
 ## Introduction
 <b>Bootstrap CSS Sprite</b> is a PHP library, which provides displaying of multiple images as a signle sprite in a Bootstrap 3 style.
 E.g. you have a set of images one of which is named <b>cat.png</b>.
